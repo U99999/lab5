@@ -11,7 +11,7 @@ class HugeInt{
         public:
 	 HugeInt(){};
         HugeInt(long y){
-        for(int i=0;i<=digit;++i)
+        for(int i=0;i<digit;++i)
          huge[i]=0;
         for(int i=0;y!=0;++i){
         huge[i]=y%10;
@@ -20,7 +20,7 @@ class HugeInt{
         }
         HugeInt(string z){
         int len=z.size();
-        for(int i=0;i<=digit;++i)
+        for(int i=0;i<digit;++i)
          huge[i]=0;
         for(int i=len-1;i>=0;--i)
         huge[len-i-1]=z[i]-'0';
@@ -36,7 +36,7 @@ class HugeInt{
 
 	istream &operator >>(istream & in, HugeInt & x){
         in>>x.number;
-        for(int i=0;i<=digit;++i)
+        for(int i=0;i<digit;++i)
         x.huge[i]=0;
         for(int i=0;x.number!=0;++i){
         x.huge[i]=x.number%10;
@@ -46,13 +46,15 @@ class HugeInt{
         }
         HugeInt operator +(HugeInt x,HugeInt y ){
         HugeInt result;
-        for(int i=0;i<digit;++i)
-        result.huge[i]=x.huge[i]+y.huge[i];
         for(int i=0;i<digit;++i){
-        if(result.huge[i]>10){
-        result.huge[i]-=10;
-        result.huge[i+1]+=1;
- }
+        result.huge[i]=x.huge[i]+y.huge[i];
+ 	
+	}
+        for(int j=0;j<digit;++j){
+        if(result.huge[j]>=10){
+        result.huge[j]=result.huge[j]-10;
+        result.huge[j+1]=result.huge[j+1]+1;
+	 }
         }
         return result;
         }
@@ -60,10 +62,11 @@ class HugeInt{
         HugeInt result;
         for(int i=0;i<digit;++i){
         if(x.huge[i]<y.huge[i]){
+	
         x.huge[i]+=10;
         x.huge[i+1]-=1;
         }
-        result.huge[i]=x.huge[i]+y.huge[i];
+        result.huge[i]=x.huge[i]-y.huge[i];
         }
         return result;
         }
